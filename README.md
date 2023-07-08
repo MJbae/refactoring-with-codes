@@ -4,7 +4,7 @@
 - The structure of this summary draws inspiration from [Hugo Matilla's work.](https://github.com/HugoMatilla/Refactoring-Summary)
 
 # TABLE OF CONTENT
-- [A. BAD SMELLS IN CODE](#a-bad-smells-in-code)
+- [I. Bad Smells in Code](#i-bad-smells-in-code)
 	- [1. Mysterious Name](#1-mysterious-name)
 	- [2. Duplicated code](#2-duplicated-code)
 	- [3. Long Function](#3-long-function)
@@ -29,8 +29,15 @@
 	- [22. Data Class](#22-data-class)
 	- [23. Refused Bequest](#23-refused-bequest)
 	- [24. Comments](#24-comments)
+- [II. A First Set of Refactorings](#ii-a-first-set-of-refactorings)
+- [III. Encapsulation](#iii-encapsulation)
+- [IV. Moving Features](#iv-moving-features)
+- [V. Organizing Data](#v-organizing-data)
+- [VI. Simplifying Conditional Logic](#vi-simplifying-conditional-logic)
+- [VII. Refactoring APIs](#vii-refactoring-apis)
+- [VIII. Dealing with Inheritance](#viii-dealing-with-inheritance)
  
-# A. BAD SMELLS IN CODE
+# I. Bad Smells in Code
 ### 1. Mysterious Name
 The code's names are not simple and clear.
 ### 2. Duplicated code
@@ -102,26 +109,26 @@ class UserProfile {
 The same code snippet is scattered across multiple concerns.
 ```kotlin
 class OrderConfirmation {
-    // ... code for order confirmation processing ...
+    // order confirmation processing
 
     public void sendOrderConfirmationEmail(Order order) {
-        // ... code to send order confirmation email ...
+        // send order confirmation email
     }
 }
 
 class OrderHistory {
-    // ... code for order history management ...
+    // order history management
 
     public void sendOrderConfirmationEmail(Order order) {
-        // ... code to send order confirmation email ...
+        // send order confirmation email ...
     }
 }
 
 class OrderStatus {
-    // ... code for order status management ...
+    // code for order status management
 
     public void sendOrderConfirmationEmail(Order order) {
-        // ... code to send order confirmation email ...
+        // code to send order confirmation email
     }
 }
 ```
@@ -157,7 +164,7 @@ class Order(
     private val customerAddress: Address,
     private val items: List<Item>
 ) {
-    // ... other methods and logic ...
+    // ...
 }
 
 class Address(
@@ -240,13 +247,13 @@ interface PaymentMethod {
 
 class CreditCardPayment : PaymentMethod {
     override fun processPayment(amount: Double) {
-        // ... code to process credit card payment ...
+        // process credit card payment
     }
 }
 
 class BitcoinPayment : PaymentMethod {
     override fun processPayment(amount: Double) {
-        // ... code to process bit coin payment ...
+        // process bit coin payment
     }
 }
 ```
@@ -296,7 +303,7 @@ interface PaymentMethod {
 
 class CreditCard : PaymentMethod {
     override fun pay(amount: Double) {
-        // Implement payment logic here
+        // payment logic
     }
 }
 
@@ -370,21 +377,21 @@ Two objects perform similar functions on a large scale, but have different inter
 ```kotlin
 class StockTrader {
     fun purchaseStock(stock: Stock, quantity: Int) {
-        // Buy logic...
+        // Buy logic
     }
 
     fun sellStock(stock: Stock, quantity: Int) {
-        // Sell logic...
+        // Sell logic
     }
 }
 
 class CryptoTrader {
     fun acquireCrypto(crypto: Crypto, quantity: Int) {
-        // Buy logic...
+        // Buy logic
     }
 
     fun disposeCrypto(crypto: Crypto, quantity: Int) {
-        // Sell logic...
+        // Sell logic
     }
 }
 ```
@@ -394,7 +401,7 @@ Attributes are manipulated in data class.
 // Data Class
 data class Image(var width: Int, var height: Int, val format: String) {
     fun resize() {
-        // ... code to resized width and height ...
+        // resize width and height
     }
 }
 ```
@@ -480,3 +487,17 @@ class OrderProcessing {
     }
 }
 ```
+# II. A First Set of Refactorings
+
+# III. Encapsulation
+
+# IV. Moving Features
+
+# V. Organizing Data
+
+# VI. Simplifying Conditional Logic
+
+# VII. Refactoring APIs
+
+# VIII. Dealing with Inheritance
+
