@@ -30,7 +30,9 @@ The structure of summary is Inspired by [HugoMatilla](https://github.com/HugoMat
  
 # A. BAD SMELLS IN CODE
 ### 1. Mysterious Name
+The code's names are not simple and clear.
 ### 2. Duplicated code
+The same code snippet exists in multiple places.
 ```kotlin
 fun calculateSalesTax(amount: Double): Double {
     return amount * 0.08
@@ -41,20 +43,22 @@ fun calculateServiceTax(amount: Double): Double {
 }
 ```
 ### 3. Long Function
+There is overly long logic in a single function.
 ```kotlin
 fun calculateTotal(cart: List<Product>): Double{
     var total = 0.0
-		// caculate sub tottal
+
+    // caculate sub tottal
     for (product in cart) {
         total += product.price
     }
 
-		// apply discount 
+    // apply discount 
     if (total > 100) {
         total -= total * 0.1
     }
 
-		// add sales tax
+    // add sales tax
     val tax = total * 0.08
     total += tax
 
@@ -62,48 +66,38 @@ fun calculateTotal(cart: List<Product>): Double{
 }
 ```
 ### 4. Long Parameter List
+There are too many parameters in the function signature.
 ### 5. Global Data
+There is global data accessible throughout the codebase.
 ### 6. Mutable Data
+There is mutable data with potential side effects due to changes.
 ### 7. Divergent Change
+One object is frequently modified due to multiple concerns.
 ```kotlin
 class UserProfile {
     private String username;
     private String email;
     private Address address;
     private List<Order> orders;
-    // ... other user-related fields ...
 
-    // Methods related to user profile management
+    // Method related to user profile management
     public void changeUsername(String newUsername) {
-        // ... code to change the username ...
+    	// ... code to change the username ...
     }
 
-    public void changeEmail(String newEmail) {
-        // ... code to change the email ...
-    }
-
-    // Methods related to address management
+    // Method related to address management
     public void changeAddress(Address newAddress) {
         // ... code to change the address ...
     }
 
-    public void validateAddress() {
-        // ... code to validate the address ...
-    }
-
-    // Methods related to order management
+    // Method related to order management
     public void placeOrder(Order newOrder) {
         // ... code to place an order ...
     }
-
-    public void cancelOrder(Order order) {
-        // ... code to cancel an order ...
-    }
-
-    // ... other methods related to user profile ...
 }
 ```
 ### 8. Shotgun Surgery
+The same code snippet is scattered across multiple concerns.
 ```kotlin
 class OrderConfirmation {
     // ... code for order confirmation processing ...
@@ -130,6 +124,7 @@ class OrderStatus {
 }
 ```
 ### 9. Feature Envy
+Some attributes of an object are frequently used by other objects.
 ```kotlin
 class Customer(
     val name: String,
@@ -141,9 +136,7 @@ class Order(
     val customer: Customer,
     val items: List<Item>
 ) {
-    fun calculateTotal(): Double {
-			// 생략
-    }
+    fun calculateTotal(): Double { /*...*/ }
 
     fun printCustomerDetails() {
         println("Customer Name: ${customer.name}")
@@ -153,6 +146,7 @@ class Order(
 }
 ```
 ### 10. Data Clumps
+There are combinations of data that are used together in most cases.
 ```kotlin
 class Order(
     private val orderNumber: String,
@@ -177,6 +171,7 @@ class Item(
 )
 ```
 ### 11. Primitive Obsession
+Primitive types are used instead of defining objects that meet the requirements.
 ```kotlin
 data class User(
 	val name: String, 
@@ -185,6 +180,7 @@ data class User(
 )
 ```
 ### 12. Repeated Switches
+When adding a new case, associated cases need to be added everywhere switch statements exist.
 ```kotlin
 enum class AnimalType {
     DOG, CAT, BIRD
@@ -209,6 +205,7 @@ class Animal(val type: AnimalType) {
 }
 ```
 ### 13. Loops
+There are loops that are difficult to understand the intention of the code.
 ```kotlin
 fun sumOfPositiveNumbers(numbers: List<Int>): Int {
     var total = 0
@@ -221,6 +218,7 @@ fun sumOfPositiveNumbers(numbers: List<Int>): Int {
 }
 ```
 ### 14. Lazy Element
+There are objects defined with weak functionality.
 ```kotlin
 class UserName(val name: String)
 
@@ -232,6 +230,7 @@ val user = UserName("John Doe")
 printUserName(user) // Outputs: John Doe
 ```
 ### 15. Speculative Generality
+There are cases where implementations are done in advance based on assumptions.
 ```kotlin
 interface PaymentMethod {
     fun processPayment(amount: Double)
@@ -250,6 +249,7 @@ class BitcoinPayment : PaymentMethod {
 }
 ```
 ### 16. Temporary Field
+There are variables that are only used in specific situations.
 ```kotlin
 class Shopping {
     var eventDiscount: Double? = null
@@ -266,6 +266,7 @@ class Shopping {
 }
 ```
 ### 17. Message Chain
+There is a structure where a client requests one object, which then requests another object.
 ```kotlin
 class Order(val customer: Customer)
 class Customer(val address: Address)
@@ -277,6 +278,7 @@ val order = Order(Customer(Address(City("New York"))))
 val cityName = order.customer.address.city.name
 ```
 ### 18. Middle Man
+There is a repetition of delegating tasks to other objects instead of performing sufficient roles themselves.
 ```kotlin
 class Order(val totalCost: Double)
 
