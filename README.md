@@ -1,14 +1,14 @@
 ### IN THE MIDDLE OF PROGRESS
-### The structure of summary is Inspired by @HugoMatilla
+The structure of summary is Inspired by [HugoMatilla](https://github.com/HugoMatilla/Refactoring-Summary)
 
 # TABLE OF CONTENT
-- [1. BAD SMELLS IN CODE](#1-bad-smells-in-code)
+- [A. BAD SMELLS IN CODE](#a-bad-smells-in-code)
 	- [1. Mysterious Name](#1-mysterious-name)
 	- [2. Duplicated code](#2-duplicated-code)
 	- [3. Long Function](#3-long-function)
 	- [4. Long Parameter List](#4-long-parameter-list)
-  - [5. Global Data](#5-global-data)
-  - [6. Mutable Data](#6-mutable-data)
+	- [5. Global Data](#5-global-data)
+	- [6. Mutable Data](#6-mutable-data)
 	- [7. Divergent Change](#7-divergent-change)
 	- [8. Shotgun Surgery](#8-shotgun-surgery)
 	- [9. Feature Envy](#9-feature-envy)
@@ -28,7 +28,7 @@
 	- [23. Refused Bequest](#23-refused-bequest)
 	- [24. Comments](#24-comments)
  
-# BAD SMELLS IN CODE
+# A. BAD SMELLS IN CODE
 ### 1. Mysterious Name
 ### 2. Duplicated code
 ```kotlin
