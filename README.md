@@ -1,5 +1,7 @@
-### IN THE MIDDLE OF PROGRESS
-The structure of summary is inspired by [HugoMatilla](https://github.com/HugoMatilla/Refactoring-Summary)
+> IN THE MIDDLE OF PROGRESS
+- This summary provides a concise overview of the key concepts and principles presented in the book, focusing on the art of refactoring code to improve its design and maintainability. 
+- With the inclusion of qualified code examples, you'll gain a deeper understanding of how to improve the readability and maintainability of your codebase. 
+- The structure of summary is inspired by [HugoMatilla](https://github.com/HugoMatilla/Refactoring-Summary)
 
 # TABLE OF CONTENT
 - [A. BAD SMELLS IN CODE](#a-bad-smells-in-code)
