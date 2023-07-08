@@ -1,5 +1,5 @@
 ### IN THE MIDDLE OF PROGRESS
-The structure of summary is Inspired by [HugoMatilla](https://github.com/HugoMatilla/Refactoring-Summary)
+The structure of summary is inspired by [HugoMatilla](https://github.com/HugoMatilla/Refactoring-Summary)
 
 # TABLE OF CONTENT
 - [A. BAD SMELLS IN CODE](#a-bad-smells-in-code)
@@ -174,9 +174,9 @@ class Item(
 Primitive types are used instead of defining objects that meet the requirements.
 ```kotlin
 data class User(
-	val name: String, 
-	val email: String, 
-	val phoneNumber: String
+    val name: String, 
+    val email: String, 
+    val phoneNumber: String
 )
 ```
 ### 12. Repeated Switches
@@ -278,7 +278,7 @@ val order = Order(Customer(Address(City("New York"))))
 val cityName = order.customer.address.city.name
 ```
 ### 18. Middle Man
-There is a repetition of delegating tasks to other objects instead of performing sufficient roles themselves.
+An object is unable to fulfill its own responsibilities, and delegates responsibility to another object.
 ```kotlin
 class Order(val totalCost: Double)
 
@@ -304,31 +304,177 @@ val paymentMethod = CreditCard()
 PaymentProcessor.processPayment(order, paymentMethod)
 ```
 ### 19. Insider Trading
+An object is excessively coupled with the internals of another object.
 ```kotlin
-// Insider Trading
-class ImageProcessor(private val image: Image) {
-    fun process() {
-        val imageData = image.getImageData()
-        val filter = Filter()
-        val adjustedImage = filter.applyTo(imageData)
-        // ... code to process the adjusted image ...
+class Trader(private val stockMarket: StockMarket) {
+
+    fun buy(stock: Stock, quantity: Int): Double {
+	// needs to know about the inner workings of StockMarket to make a trade.
+        if (!stockMarket.stocks.contains(stock)) {
+            throw RuntimeException("Stock not available in the market.")
+        }
+        val cost = stock.price * quantity
+        stock.price += quantity // directly manipulates the price of Stock
+        return cost
+    }
+}
+
+class Stock(var price: Double) 
+
+class StockMarket {
+    var stocks: MutableList<Stock> = mutableListOf()
+
+    fun addStock(stock: Stock) {
+        stocks.add(stock)
     }
 }
 ```
 ### 20. Large Classes
+An object has too many responsibilities.
 ```kotlin
-class Order {
-    var total = 0.0
-    val products = mutableListOf<Product>()
+class Trader(var name: String, var address: String, var phoneNumber: String, var accountBalance: Double) {
+    //...
+    fun buy(stock: Stock, quantity: Int) {
+        // buy logic
+    }
 
-    fun addProduct(product: Product) { /*...*/ }
-    fun removeProduct(product: Product) { /*...*/ }
-    fun calculateTotal() { /*...*/ }
-    fun applyDiscount() { /*...*/ }
-    fun addSalesTax() { /*...*/ }
+    fun sell(stock: Stock, quantity: Int) {
+        // sell logic
+    }
+
+    fun updateAddress(newAddress: String) {
+        this.address = newAddress
+    }
+
+    fun updatePhoneNumber(newPhoneNumber: String) {
+        this.phoneNumber = newPhoneNumber
+    }
+
+    fun deposit(amount: Double) {
+        this.accountBalance += amount
+    }
+
+    fun withdraw(amount: Double) {
+        if (this.accountBalance < amount) {
+            throw IllegalArgumentException("Insufficient balance!")
+        }
+        this.accountBalance -= amount
+    }
+    //...
 }
 ```
 ### 21. Alternative Classes with Different Interfaces
+Two objects perform similar functions on a large scale, but have different interfaces.
+```kotlin
+class StockTrader {
+    fun purchaseStock(stock: Stock, quantity: Int) {
+        // Buy logic...
+    }
+
+    fun sellStock(stock: Stock, quantity: Int) {
+        // Sell logic...
+    }
+}
+
+class CryptoTrader {
+    fun acquireCrypto(crypto: Crypto, quantity: Int) {
+        // Buy logic...
+    }
+
+    fun disposeCrypto(crypto: Crypto, quantity: Int) {
+        // Sell logic...
+    }
+}
+```
 ### 22. Data Class
+Attributes are manipulated in data class.
+```kotlin
+// Data Class
+data class Image(var width: Int, var height: Int, val format: String) {
+    fun resize() {
+        // ... code to resized width and height ...
+    }
+}
+```
 ### 23. Refused Bequest
+A child object does not use some of the methods of its parent object.
+```kotlin
+open class Vehicle {
+    open fun startEngine() {
+        // Start engine
+    }
+
+    open fun move() {
+        // Move
+    }
+
+    open fun stop() {
+        // Stop
+    }
+}
+
+class Car: Vehicle() {
+    override fun startEngine() {
+        // Start car engine
+    }
+
+    override fun move() {
+        // Car moves
+    }
+
+    override fun stop() {
+        // Car stops
+    }
+}
+
+class Bicycle: Vehicle() {
+    override fun startEngine() {
+        throw UnsupportedOperationException("Bicycles don't have engines")
+    }
+
+    override fun move() {
+        // Bicycle moves
+    }
+
+    override fun stop() {
+        // Bicycle stops
+    }
+}
+```
 ### 24. Comments
+Comments are added because the code itself cannot sufficiently explain the business logic.
+```kotlin
+class OrderProcessing {
+
+    fun processOrder(order: Order) {
+        // Validate order
+        if (order.items.isEmpty()) {
+            throw IllegalArgumentException("Order cannot be empty")
+        }
+        if (order.customer == null) {
+            throw IllegalArgumentException("Customer information is required")
+        }
+
+        // Calculate total
+        var total = 0.0
+        for (item in order.items) {
+            total += item.price
+        }
+
+        // Apply discount
+        if (order.customer.isPremium) {
+            total *= 0.9  // 10% discount for premium customers
+        }
+
+        // Create invoice
+        val invoice = Invoice(order.customer, total)
+
+        // Send invoice
+        sendInvoice(invoice)
+    }
+
+    private fun sendInvoice(invoice: Invoice) {
+        // logic to send the invoice
+    }
+}
+```
