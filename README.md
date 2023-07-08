@@ -91,17 +91,17 @@ class UserProfile {
 
     // Method related to user profile management
     public void changeUsername(String newUsername) {
-    	// ... code to change the username ...
+    	// change the username
     }
 
     // Method related to address management
     public void changeAddress(Address newAddress) {
-        // ... code to change the address ...
+        // cchange the address
     }
 
     // Method related to order management
     public void placeOrder(Order newOrder) {
-        // ... code to place an order ...
+        // place an order
     }
 }
 ```
@@ -120,7 +120,7 @@ class OrderHistory {
     // order history management
 
     public void sendOrderConfirmationEmail(Order order) {
-        // send order confirmation email ...
+        // send order confirmation email
     }
 }
 
@@ -163,9 +163,7 @@ class Order(
     private val customerEmail: String,
     private val customerAddress: Address,
     private val items: List<Item>
-) {
-    // ...
-}
+)
 
 class Address(
     val street: String,
@@ -377,21 +375,21 @@ Two objects perform similar functions on a large scale, but have different inter
 ```kotlin
 class StockTrader {
     fun purchaseStock(stock: Stock, quantity: Int) {
-        // Buy logic
+        // buy logic
     }
 
     fun sellStock(stock: Stock, quantity: Int) {
-        // Sell logic
+        // sell logic
     }
 }
 
 class CryptoTrader {
     fun acquireCrypto(crypto: Crypto, quantity: Int) {
-        // Buy logic
+        // buy logic
     }
 
     fun disposeCrypto(crypto: Crypto, quantity: Int) {
-        // Sell logic
+        // sell logic
     }
 }
 ```
@@ -410,29 +408,29 @@ A child object does not use some of the methods of its parent object.
 ```kotlin
 open class Vehicle {
     open fun startEngine() {
-        // Start engine
+        // start engine
     }
 
     open fun move() {
-        // Move
+        // move
     }
 
     open fun stop() {
-        // Stop
+        // stop
     }
 }
 
 class Car: Vehicle() {
     override fun startEngine() {
-        // Start car engine
+        // start car engine
     }
 
     override fun move() {
-        // Car moves
+        // car moves
     }
 
     override fun stop() {
-        // Car stops
+        // car stops
     }
 }
 
@@ -442,11 +440,11 @@ class Bicycle: Vehicle() {
     }
 
     override fun move() {
-        // Bicycle moves
+        // bicycle moves
     }
 
     override fun stop() {
-        // Bicycle stops
+        // bicycle stops
     }
 }
 ```
@@ -456,7 +454,7 @@ Comments are added because the code itself cannot sufficiently explain the busin
 class OrderProcessing {
 
     fun processOrder(order: Order) {
-        // Validate order
+        // validate order
         if (order.items.isEmpty()) {
             throw IllegalArgumentException("Order cannot be empty")
         }
@@ -464,26 +462,26 @@ class OrderProcessing {
             throw IllegalArgumentException("Customer information is required")
         }
 
-        // Calculate total
+        // calculate total
         var total = 0.0
         for (item in order.items) {
             total += item.price
         }
 
-        // Apply discount
+        // apply discount
         if (order.customer.isPremium) {
             total *= 0.9  // 10% discount for premium customers
         }
 
-        // Create invoice
+        // create invoice
         val invoice = Invoice(order.customer, total)
 
-        // Send invoice
+        // send invoice
         sendInvoice(invoice)
     }
 
     private fun sendInvoice(invoice: Invoice) {
-        // logic to send the invoice
+        // send the invoice
     }
 }
 ```
