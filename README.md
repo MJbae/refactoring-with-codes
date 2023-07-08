@@ -244,7 +244,7 @@ class CreditCardPayment : PaymentMethod {
 
 class BitcoinPayment : PaymentMethod {
     override fun processPayment(amount: Double) {
-        // ... code to process cash payment ...
+        // ... code to process bit coin payment ...
     }
 }
 ```
