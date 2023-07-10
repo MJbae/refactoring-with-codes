@@ -39,7 +39,7 @@
  
 # I. Bad Smells in Code
 ### 1. Mysterious Name
-The code's names are not simple and clear.
+Code names lack both simplicity and clarity
 ### 2. Duplicated code
 The same code snippet exists in multiple places.
 ```kotlin
