@@ -335,7 +335,7 @@ class StockMarket {
 }
 ```
 ### 20. Large Classes
-An object has too many responsibilities.
+An Class has too many responsibilities.
 ```kotlin
 class Trader(var name: String, var address: String, var phoneNumber: String, var accountBalance: Double) {
     //...
@@ -369,7 +369,7 @@ class Trader(var name: String, var address: String, var phoneNumber: String, var
 }
 ```
 ### 21. Alternative Classes with Different Interfaces
-Two objects perform similar functions on a large scale, but have different interfaces.
+Classes perform similar functions on a large scale, but have different interfaces.
 ```kotlin
 class StockTrader {
     fun purchaseStock(stock: Stock, quantity: Int) {
