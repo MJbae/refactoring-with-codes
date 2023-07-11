@@ -57,7 +57,7 @@ There is overly long logic in a single function.
 fun calculateTotal(cart: List<Product>): Double{
     var total = 0.0
 
-    // caculate sub tottal
+    // caculate sub total
     for (product in cart) {
         total += product.price
     }
@@ -83,25 +83,29 @@ There is mutable data with potential side effects due to changes.
 ### 7. Divergent Change
 One object is frequently modified due to multiple concerns.
 ```kotlin
+data class Address(var street: String, var city: String, var state: String, var zip: String)
+
+data class Order(var id: Int, var product: String, var quantity: Int)
+
 class UserProfile {
-    private String username;
-    private String email;
-    private Address address;
-    private List<Order> orders;
+    var username: String = ""
+    var email: String = ""
+    var address: Address = Address("", "", "", "")
+    var orders: MutableList<Order> = mutableListOf()
 
-    // Method related to user profile management
-    public void changeUsername(String newUsername) {
-    	// change the username
+    // user profile management
+    fun changeUsername(newUsername: String) {
+        username = newUsername
     }
 
-    // Method related to address management
-    public void changeAddress(Address newAddress) {
-        // cchange the address
+    // address management
+    fun changeAddress(newAddress: Address) {
+        address = newAddress
     }
 
-    // Method related to order management
-    public void placeOrder(Order newOrder) {
-        // place an order
+    // order management
+    fun placeOrder(newOrder: Order) {
+        orders.add(newOrder)
     }
 }
 ```
@@ -109,26 +113,20 @@ class UserProfile {
 The same code snippet is scattered across multiple concerns.
 ```kotlin
 class OrderConfirmation {
-    // order confirmation processing
-
-    public void sendOrderConfirmationEmail(Order order) {
-        // send order confirmation email
+    fun sendConfirmationEmail(order: Order) {
+        // Send order confirmation email
     }
 }
 
 class OrderHistory {
-    // order history management
-
-    public void sendOrderConfirmationEmail(Order order) {
-        // send order confirmation email
+    fun sendConfirmationEmail(order: Order) {
+        // Send order confirmation email
     }
 }
 
 class OrderStatus {
-    // code for order status management
-
-    public void sendOrderConfirmationEmail(Order order) {
-        // code to send order confirmation email
+    fun sendConfirmationEmail(order: Order) {
+        // Send order confirmation email
     }
 }
 ```
