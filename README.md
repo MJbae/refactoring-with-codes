@@ -491,10 +491,8 @@ class OrderProcessing {
 ```mermaid
 graph TD
     stage1[Stage 1: Compose Functions and Naming]
-    ExtractFunction(Extract Function)
-    ExtractVariable(Extract Variable)
-    InlineFunction(Inline Function)
-    InlineVariable(Inline Variable)
+    Function(Function Extraction or Inlining)
+    Variable(Variable Extraction or Inlining)
     ChangeFunctionDeclaration(Change Function Declaration)
     ChangeVariableName(Change Variable Name)
     VariableEncapsulation(Variable Encapsulation)
@@ -506,10 +504,8 @@ graph TD
 
     stage3[Stage 3: Splitting Steps]
     
-    stage1 --> ExtractFunction -->  stage2
-    stage1 --> InlineFunction -->  stage2
-    stage1 --> ExtractVariable --> stage2
-    stage1 --> InlineVariable --> stage2
+    stage1 --> Function -->  stage2
+    stage1 --> Variable -->  stage2
     stage1 --> ChangeFunctionDeclaration --> stage2
     stage1 --> ChangeVariableName --> stage2
     stage1 --> VariableEncapsulation --> stage2
