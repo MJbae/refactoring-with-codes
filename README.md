@@ -30,6 +30,9 @@
 	- [23. Refused Bequest](#23-refused-bequest)
 	- [24. Comments](#24-comments)
 - [II. A First Set of Refactorings](#ii-a-first-set-of-refactorings)
+	- [1. II Overview](#1-ii-overview)
+ 	- [2. Function Extraction or Inlining](#2-function-extraction-or-inlining)
+	- [3. Variable Extraction or Inlining](#3-variable-extraction-or-inlining)
 - [III. Encapsulation](#iii-encapsulation)
 - [IV. Moving Features](#iv-moving-features)
 - [V. Organizing Data](#v-organizing-data)
@@ -484,6 +487,143 @@ class OrderProcessing {
 }
 ```
 # II. A First Set of Refactorings
+### 1. II Overview
+```mermaid
+graph TD
+    stage1[Stage 1: Compose Functions and Naming]
+    ExtractFunction(Extract Function)
+    ExtractVariable(Extract Variable)
+    InlineFunction(Inline Function)
+    InlineVariable(Inline Variable)
+    ChangeFunctionDeclaration(Change Function Declaration)
+    ChangeVariableName(Change Variable Name)
+    VariableEncapsulation(Variable Encapsulation)
+    CreateParameterObject(Create Parameter Object)
+
+    stage2[Stage 2: Grouping Functions]
+    GroupFunctionsInClass(Group Functions in Class)
+    GroupFunctionsInTransformFunction(Group Functions in Transform Function)
+
+    stage3[Stage 3: Splitting Steps]
+    
+    stage1 --> ExtractFunction -->  stage2
+    stage1 --> InlineFunction -->  stage2
+    stage1 --> ExtractVariable --> stage2
+    stage1 --> InlineVariable --> stage2
+    stage1 --> ChangeFunctionDeclaration --> stage2
+    stage1 --> ChangeVariableName --> stage2
+    stage1 --> VariableEncapsulation --> stage2
+    stage1 --> CreateParameterObject --> stage2
+    
+    stage2 --> GroupFunctionsInClass --> stage3
+    stage2 --> GroupFunctionsInTransformFunction --> stage3
+
+```
+
+### 2. Function Extraction or Inlining 
+Functions are extracted based on the separation of 'purpose' and 'implementation'. In other words, if the code contains the implementation, it is extracted into a function. Conversely, if the extracted function contains the purpose, it is inlined. It is not important if the function name is longer than the function body or if the function body is too short.
+- Function Extraction Example
+    
+    ```kotlin
+    class OrderProcessing() {
+    
+        fun placeOrder(order: Order) 
+            val totalPrice = order.items.sumOf { item -> item.price }
+            var finalPrice = if (order.items.size >= 10) totalPrice * 0.9 else totalPrice
+            order.status = Status.COMPLETED
+            order.totalPrice = finalPrice
+        }
+    }
+    ```
+    
+    to
+    
+    ```kotlin
+    class OrderService() {
+    	fun placeOrder(order: Order) {
+            val totalPrice = order.items.sumOf { item -> item.price }
+            val finalPrice = applyDiscounts(totalPrice)
+            finalizeOrder(finalPrice)
+        }
+    
+        private fun applyDiscounts(totalPrice: Double): Double {
+            return if (order.items.size >= 10) totalPrice * 0.9 else totalPrice
+        }
+    
+        private fun finalizeOrder(finalPrice: Double) {
+            order.status = Status.COMPLETED
+            order.totalPrice = finalPrice
+        }
+    }
+    ```
+    
+- Function Inlining Example
+    
+    ```kotlin
+    class OrderService() {
+    	fun placeOrder(order: Order) {
+            val totalPrice = calculateTotal()
+            val finalPrice = applyDiscounts(totalPrice)
+            finalizeOrder(finalPrice)
+        }
+    	// ...omitted
+    }
+    ```
+    
+    to
+    
+    ```kotlin
+    class OrderService() {
+    	fun placeOrder(order: Order) {
+            val totalPrice = order.items.sumOf { item -> item.price }
+            val finalPrice = applyDiscounts(totalPrice)
+            finalizeOrder(finalPrice)
+        }
+    	// ...omitted
+    }
+    ```
+
+
+
+### 3. Variable Extraction or Inlining 
+Like functions, variables are extracted based on the separation of 'purpose' and 'implementation'. If the code to be extracted has meaning outside of the function, it should be extracted into a function rather than a variable.
+
+- Variable Extraction Example
+    
+    ```kotlin
+    private fun applyDiscounts(totalPrice: Double): Double {
+        return if (order.items.size >= 10) totalPrice * 0.9 else totalPrice
+    }
+    ```
+    
+    to
+    
+    ```kotlin
+    private fun applyDiscounts(totalPrice: Double): Double {
+        val isDiscountApplicable = order.items.size >= 10
+        val discountRate = 0.9
+        return if (isDiscountApplicable) totalPrice * discountRate else totalPrice
+    }
+    ```
+    
+- Variable Inlining Example
+    
+    ```kotlin
+    private fun applyDiscounts(totalPrice: Double): Double {
+        val itemSize = order.items.size
+        val discountRate = 0.9
+        return if (itemSize >= 10) totalPrice * discountRate else totalPrice
+    }
+    ```
+    
+    to
+    
+    ```kotlin
+    private fun applyDiscounts(totalPrice: Double): Double {
+        val discountRate = 0.9
+        return if (order.items.size >= 10) totalPrice * discountRate else totalPrice
+    }
+    ```
 
 # III. Encapsulation
 
