@@ -525,13 +525,12 @@ Functions are extracted based on the separation of 'purpose' and 'implementation
 - Function Extraction Example
     
     ```kotlin
-    class OrderProcessing() {
-    
-        fun placeOrder(order: Order) 
-            val totalPrice = order.items.sumOf { item -> item.price }
-            var finalPrice = if (order.items.size >= 10) totalPrice * 0.9 else totalPrice
-            order.status = Status.COMPLETED
-            order.totalPrice = finalPrice
+    class OrderService() {
+    	fun placeOrder(order: Order)
+    	   val totalPrice = order.items.sumOf { item -> item.price }
+    	   var finalPrice = if (order.items.size >= 10) totalPrice * 0.9 else totalPrice
+    	   order.status = Status.COMPLETED
+    	   order.totalPrice = finalPrice
         }
     }
     ```
@@ -541,18 +540,18 @@ Functions are extracted based on the separation of 'purpose' and 'implementation
     ```kotlin
     class OrderService() {
     	fun placeOrder(order: Order) {
-            val totalPrice = order.items.sumOf { item -> item.price }
-            val finalPrice = applyDiscounts(totalPrice)
-            finalizeOrder(finalPrice)
+    	   val totalPrice = order.items.sumOf { item -> item.price }
+    	   val finalPrice = applyDiscounts(totalPrice)
+    	   finalizeOrder(finalPrice)
+    	}
+
+    	private fun applyDiscounts(totalPrice: Double): Double {
+    	   return if (order.items.size >= 10) totalPrice * 0.9 else totalPrice
         }
-    
-        private fun applyDiscounts(totalPrice: Double): Double {
-            return if (order.items.size >= 10) totalPrice * 0.9 else totalPrice
-        }
-    
-        private fun finalizeOrder(finalPrice: Double) {
-            order.status = Status.COMPLETED
-            order.totalPrice = finalPrice
+
+    	private fun finalizeOrder(finalPrice: Double) {
+    	   order.status = Status.COMPLETED
+    	   order.totalPrice = finalPrice
         }
     }
     ```
@@ -562,9 +561,9 @@ Functions are extracted based on the separation of 'purpose' and 'implementation
     ```kotlin
     class OrderService() {
     	fun placeOrder(order: Order) {
-            val totalPrice = calculateTotal()
-            val finalPrice = applyDiscounts(totalPrice)
-            finalizeOrder(finalPrice)
+    	   val totalPrice = calculateTotal()
+    	   val finalPrice = applyDiscounts(totalPrice)
+    	   finalizeOrder(finalPrice)
         }
     	// ...omitted
     }
@@ -575,9 +574,9 @@ Functions are extracted based on the separation of 'purpose' and 'implementation
     ```kotlin
     class OrderService() {
     	fun placeOrder(order: Order) {
-            val totalPrice = order.items.sumOf { item -> item.price }
-            val finalPrice = applyDiscounts(totalPrice)
-            finalizeOrder(finalPrice)
+    	   val totalPrice = order.items.sumOf { item -> item.price }
+    	   val finalPrice = applyDiscounts(totalPrice)
+    	   finalizeOrder(finalPrice)
         }
     	// ...omitted
     }
@@ -592,7 +591,7 @@ Like functions, variables are extracted based on the separation of 'purpose' and
     
     ```kotlin
     private fun applyDiscounts(totalPrice: Double): Double {
-        return if (order.items.size >= 10) totalPrice * 0.9 else totalPrice
+    	return if (order.items.size >= 10) totalPrice * 0.9 else totalPrice
     }
     ```
     
@@ -600,9 +599,9 @@ Like functions, variables are extracted based on the separation of 'purpose' and
     
     ```kotlin
     private fun applyDiscounts(totalPrice: Double): Double {
-        val isDiscountApplicable = order.items.size >= 10
-        val discountRate = 0.9
-        return if (isDiscountApplicable) totalPrice * discountRate else totalPrice
+    	val isDiscountApplicable = order.items.size >= 10
+    	val discountRate = 0.9
+    	return if (isDiscountApplicable) totalPrice * discountRate else totalPrice
     }
     ```
     
@@ -610,9 +609,9 @@ Like functions, variables are extracted based on the separation of 'purpose' and
     
     ```kotlin
     private fun applyDiscounts(totalPrice: Double): Double {
-        val itemSize = order.items.size
-        val discountRate = 0.9
-        return if (itemSize >= 10) totalPrice * discountRate else totalPrice
+    	val itemSize = order.items.size
+    	val discountRate = 0.9
+    	return if (itemSize >= 10) totalPrice * discountRate else totalPrice
     }
     ```
     
@@ -620,8 +619,8 @@ Like functions, variables are extracted based on the separation of 'purpose' and
     
     ```kotlin
     private fun applyDiscounts(totalPrice: Double): Double {
-        val discountRate = 0.9
-        return if (order.items.size >= 10) totalPrice * discountRate else totalPrice
+    	val discountRate = 0.9
+    	return if (order.items.size >= 10) totalPrice * discountRate else totalPrice
     }
     ```
 
