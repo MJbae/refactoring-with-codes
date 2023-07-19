@@ -33,6 +33,7 @@
 	- [1. II Overview](#1-ii-overview)
  	- [2. Function Extraction or Inlining](#2-function-extraction-or-inlining)
 	- [3. Variable Extraction or Inlining](#3-variable-extraction-or-inlining)
+	- [4. Changing Function Declaration](#4-changing-function-declaration)
 - [III. Encapsulation](#iii-encapsulation)
 - [IV. Moving Features](#iv-moving-features)
 - [V. Organizing Data](#v-organizing-data)
@@ -517,7 +518,11 @@ graph TD
 ```
 
 ### 2. Function Extraction or Inlining 
-Functions are extracted based on the separation of 'purpose' and 'implementation'. In other words, if the code contains the implementation, it is extracted into a function. Conversely, if the extracted function contains the purpose, it is inlined. It is not important if the function name is longer than the function body or if the function body is too short.
+> Extract based on the separation of 'purpose' and 'implementation'
+
+If the code contains the implementation, it is extracted into a function. Conversely, if the extracted function contains the purpose, it is inlined. 
+
+It is not important if the function name is longer than the function body or if the function body is too short.
 - Function Extraction Example
     
     ```kotlin
@@ -581,7 +586,9 @@ Functions are extracted based on the separation of 'purpose' and 'implementation
 
 
 ### 3. Variable Extraction or Inlining 
-Like functions, variables are extracted based on the separation of 'purpose' and 'implementation'. If the code to be extracted has meaning outside of the function, it should be extracted into a function rather than a variable.
+> Again extracted based on the separation of 'purpose' and 'implementation'
+
+If the code to be extracted has meaning outside of the function, it should be extracted into a function rather than a variable.
 
 - Variable Extraction Example
     
@@ -619,6 +626,52 @@ Like functions, variables are extracted based on the separation of 'purpose' and
     	return if (order.items.size >= 10) totalPrice * discountRate else totalPrice
     }
     ```
+### 4. Changing Function Declaration
+> Declare the name and parameters of the function in line with its 'purpose'
+
+When it comes to the name, it should be defined according to the purpose it serves where it's called, not based on its internal implementation.
+
+As for parameters, you should decide whether to deliver only essential values to increase utilization, or to pass associated objects to raise the level of encapsulation.
+- Example of Changing Function Name
+	```kotlin
+	class Bank() {
+	    fun calculateInterestByAccountType(account: Account): Double {
+		val rate = if (account.type == AccountType.CHECKING) 0.01 else 0.02
+		return account.balance * rate
+	    }
+	}
+	```
+	
+	to
+	
+	```kotlin
+	class Bank() {
+	    fun calculateInterest(account: Account): Double {
+		val rate = if (account.type == AccountType.CHECKING) 0.01 else 0.02
+		return account.balance * rate
+	    }
+	}
+	
+	```
+- Example of Changing Parameters
+	```kotlin
+	fun applyDiscount(totalPrice: Double, numberOfItems: Int): Double {
+	    val discountRate = 0.9
+	    return if (numberOfItems >= 10) totalPrice * discountRate else totalPrice
+	}
+
+	```
+	
+	to
+	
+	```kotlin
+	fun applyDiscount(order: Order): Double {
+	    val discountRate = 0.9
+	    return if (order.items.size >= 10) order.totalPrice * discountRate else order.totalPrice
+	}
+
+	
+	```
 
 # III. Encapsulation
 
