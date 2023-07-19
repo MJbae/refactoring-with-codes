@@ -586,7 +586,7 @@ It is not important if the function name is longer than the function body or if 
 
 
 ### 3. Variable Extraction or Inlining 
-> Again extracted based on the separation of 'purpose' and 'implementation'
+> Again extract based on the separation of 'purpose' and 'implementation'
 
 If the code to be extracted has meaning outside of the function, it should be extracted into a function rather than a variable.
 
