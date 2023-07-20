@@ -34,6 +34,11 @@
  	- [2. Function Extraction or Inlining](#2-function-extraction-or-inlining)
 	- [3. Variable Extraction or Inlining](#3-variable-extraction-or-inlining)
 	- [4. Changing Function Declaration](#4-changing-function-declaration)
+	- [5. Encapsulation of Variables](#5-encapsulation-of-variables)
+	- [6. Renaming Variables](#6-renaming-variables)
+	- [7. Creation of Parameter Objects](#7-creation-of-parameter-objects)
+	- [8. Grouping Multiple Functions into a Class](#8-grouping-multiple-functions-into-a-class)
+	- [9. Grouping Multiple Functions into a Transformation Function](#9-grouping-multiple-functions-into-a-transformation-function)
 - [III. Encapsulation](#iii-encapsulation)
 - [IV. Moving Features](#iv-moving-features)
 - [V. Organizing Data](#v-organizing-data)
@@ -672,6 +677,28 @@ As for parameters, you should decide whether to deliver only essential values to
 
 	
 	```
+### 5. Encapsulation of Variables
+> Encapsulate mutable data with broad scope for access and updates
+
+In flexible programming environments, there's a high likelihood of mutable data with a wide range of validity across the code.
+In OOP environments, mutable data that goes beyond the class is not tolerated.
+
+### 6. Renaming Variables
+> Name the variables so that their 'purpose' can be clearly understood within the context
+
+If understandable within context, it's okay to name variables with a single character.
+For persistent data stored in the DB, more attention should be paid to the variable name.
+
+### 7. Creation of Parameter Objects
+> When you see related data clusters, bundle them into objects
+
+When the process of structuring data clusters based on objects is repeated, it seems to provide a more straightforward solution to problems.
+
+### 8. Grouping Multiple Functions into a Class
+> When you see a cluster of functions centered on common data, bundle them into a class
+
+### 9. Grouping Multiple Functions into a Transformation Function
+> Adopt only if the team's style is 'grouping into a transformation function', otherwise bundle into a class
 
 # III. Encapsulation
 
